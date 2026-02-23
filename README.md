@@ -135,6 +135,12 @@ MinIO provides S3-compatible object storage used by Milvus. You can also use it 
 
 Open [http://localhost:8090](http://localhost:8090) in a browser to view all service connection details at a glance.
 
+A machine-readable JSON version is available at [http://localhost:8090/services.json](http://localhost:8090/services.json):
+
+```bash
+curl http://localhost:8090/services.json
+```
+
 ## Data Persistence
 
 Each service stores its data in a named Docker volume. Data survives `docker compose down` but is removed by `docker compose down -v`.
