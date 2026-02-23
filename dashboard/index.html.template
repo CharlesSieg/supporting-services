@@ -120,6 +120,31 @@
       user-select: all;
     }
 
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.5rem;
+      background: #64748b;
+      flex-shrink: 0;
+    }
+
+    .status-dot.healthy {
+      background: var(--green);
+      box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
+    }
+
+    .status-dot.unhealthy {
+      background: #f87171;
+      box-shadow: 0 0 6px rgba(248, 113, 113, 0.5);
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+    }
+
     @media (max-width: 480px) {
       body { padding: 1rem; }
       .grid { grid-template-columns: 1fr; }
@@ -138,7 +163,7 @@
   <!-- PostgreSQL -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">PostgreSQL</span>
+      <span class="card-title-group"><span class="status-dot" data-service="postgres"></span><span class="card-title">PostgreSQL</span></span>
       <span class="card-badge">v17</span>
     </div>
     <div class="field">
@@ -163,7 +188,7 @@
   <!-- MySQL -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">MySQL</span>
+      <span class="card-title-group"><span class="status-dot" data-service="mysql"></span><span class="card-title">MySQL</span></span>
       <span class="card-badge">v8.4</span>
     </div>
     <div class="field">
@@ -192,7 +217,7 @@
   <!-- Redis -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">Redis</span>
+      <span class="card-title-group"><span class="status-dot" data-service="redis"></span><span class="card-title">Redis</span></span>
       <span class="card-badge">v7</span>
     </div>
     <div class="field">
@@ -205,7 +230,7 @@
   <!-- Valkey -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">Valkey</span>
+      <span class="card-title-group"><span class="status-dot" data-service="valkey"></span><span class="card-title">Valkey</span></span>
       <span class="card-badge">v8</span>
     </div>
     <div class="field">
@@ -222,7 +247,7 @@
   <!-- Milvus -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">Milvus</span>
+      <span class="card-title-group"><span class="status-dot" data-service="milvus"></span><span class="card-title">Milvus</span></span>
       <span class="card-badge">v2.4</span>
     </div>
     <div class="field">
@@ -239,7 +264,7 @@
   <!-- MinIO -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title">MinIO</span>
+      <span class="card-title-group"><span class="status-dot" data-service="minio"></span><span class="card-title">MinIO</span></span>
       <span class="card-badge">Milvus storage</span>
     </div>
     <div class="field">
@@ -261,6 +286,24 @@
   </div>
 
 </div>
+
+<script>
+  function updateHealth() {
+    fetch('/health.json')
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .then(function(data) {
+        if (!data || !data.services) return;
+        document.querySelectorAll('.status-dot[data-service]').forEach(function(dot) {
+          var status = data.services[dot.dataset.service];
+          dot.classList.remove('healthy', 'unhealthy');
+          if (status) dot.classList.add(status);
+        });
+      })
+      .catch(function() {});
+  }
+  updateHealth();
+  setInterval(updateHealth, 10000);
+</script>
 
 </body>
 </html>

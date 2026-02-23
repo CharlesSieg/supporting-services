@@ -12,17 +12,33 @@ A configurable set of containerized services for local development, launched via
 
 ## Services
 
-| Service    | Description                                   | Default Port(s)           |
-| ---------- | --------------------------------------------- | ------------------------- |
-| PostgreSQL | Relational database (v17)                     | 5432                      |
-| MySQL      | Relational database (v8.4)                    | 3306                      |
-| Redis      | In-memory key-value store (v7)                | 6379                      |
-| Valkey     | Redis-compatible key-value store (v8)         | 6380                      |
-| Milvus     | Vector database (v2.4 standalone)             | 19530 (gRPC), 9091 (HTTP) |
-| MinIO      | S3-compatible object storage (Milvus backend) | 9000 (API), 9001 (Console)|
-| Dashboard  | Service info web UI                           | 8090                      |
+### PostgreSQL (v17) — port 5432
 
-Milvus runs with two internal dependencies (etcd and MinIO) which are managed automatically.
+The world's most advanced open-source relational database. Use it for structured data, complex queries, JSONB document storage, full-text search, and anything that benefits from ACID transactions and a rich SQL feature set.
+
+### MySQL (v8.4) — port 3306
+
+A widely-adopted open-source relational database known for its speed and reliability. A common choice for web applications, CMSs, and any workload that needs a battle-tested SQL engine with broad ecosystem support.
+
+### Redis (v7) — port 6379
+
+An in-memory data store used as a cache, message broker, or lightweight database. Supports strings, hashes, lists, sets, sorted sets, streams, and more. Ideal for session storage, rate limiting, real-time leaderboards, and pub/sub messaging.
+
+### Valkey (v8) — port 6380
+
+A community-driven, open-source fork of Redis maintained by the Linux Foundation. Wire-compatible with Redis clients and protocols, so any Redis SDK or CLI works out of the box. Runs on a separate port to allow side-by-side use with Redis.
+
+### Milvus (v2.4) — ports 19530 (gRPC), 9091 (HTTP)
+
+A purpose-built vector database for similarity search and AI applications. Store, index, and query high-dimensional embeddings at scale. Commonly used for semantic search, recommendation systems, RAG pipelines, and image/audio retrieval. Milvus runs with two internal dependencies (etcd and MinIO) which are managed automatically.
+
+### MinIO — ports 9000 (API), 9001 (Console)
+
+An S3-compatible object storage server that serves as Milvus's storage backend. Also usable directly for any workload that needs S3-compatible blob storage locally — upload files, store model artifacts, or test S3 integrations without hitting AWS.
+
+### Dashboard — port 8090
+
+A built-in web UI that displays every service's ports, credentials, and connection strings at a glance. Includes live health monitoring — each service is checked every 10 seconds and displayed with a green (healthy) or red (unhealthy) status indicator.
 
 ## Prerequisites
 
@@ -133,12 +149,18 @@ MinIO provides S3-compatible object storage used by Milvus. You can also use it 
 
 ### Dashboard
 
-Open [http://localhost:8090](http://localhost:8090) in a browser to view all service connection details at a glance.
+Open [http://localhost:8090](http://localhost:8090) in a browser to view all service connection details and live health status.
 
-A machine-readable JSON version is available at [http://localhost:8090/services.json](http://localhost:8090/services.json):
+Machine-readable endpoints:
+
+| Endpoint | Description |
+| -------- | ----------- |
+| [/services.json](http://localhost:8090/services.json) | Connection details for all services |
+| [/health.json](http://localhost:8090/health.json) | Live health status (updated every 10s) |
 
 ```bash
 curl http://localhost:8090/services.json
+curl http://localhost:8090/health.json
 ```
 
 ## Data Persistence

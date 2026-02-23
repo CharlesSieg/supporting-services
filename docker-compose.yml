@@ -154,6 +154,13 @@ services:
     build: ./dashboard
     container_name: dashboard
     restart: unless-stopped
+    depends_on:
+      - postgres
+      - mysql
+      - redis
+      - valkey
+      - milvus
+      - milvus-minio
     ports:
       - "${DASHBOARD_PORT:-8090}:80"
     environment:
