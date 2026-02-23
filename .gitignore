@@ -1,0 +1,15 @@
+# Data volumes
+data/
+
+# Environment overrides
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
