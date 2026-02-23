@@ -156,6 +156,7 @@
 <header>
   <h1>Supporting Services</h1>
   <p>Local development service dashboard</p>
+  <p style="margin-top: 0.5rem;"><a href="/services.json" style="color: var(--accent); font-size: 0.85rem; text-decoration: none; font-family: var(--mono);">http://localhost:${DASHBOARD_PORT}/services.json</a></p>
 </header>
 
 <div class="grid">
