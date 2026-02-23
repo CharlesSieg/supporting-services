@@ -1,16 +1,26 @@
 # Supporting Services
 
-A configurable set of containerized services for local development, launched via Docker Compose.
+A configurable set of containerized services for local development, launched via Docker Compose. Every service runs on `localhost` with sensible defaults so you can `docker compose up -d` and start building immediately — no manual setup, no external dependencies.
+
+**Why use this?**
+
+- **Zero configuration** — defaults work out of the box; override anything via `.env.local`.
+- **Consistent environments** — every team member gets the same service versions, ports, and credentials.
+- **Selective startup** — spin up only the services your project needs (e.g. `docker compose up -d postgres redis`).
+- **Persistent data** — named Docker volumes survive restarts; wipe with `docker compose down -v` when needed.
+- **Dashboard** — a built-in web UI at [http://localhost:8090](http://localhost:8090) shows every service's ports, credentials, and connection strings at a glance.
 
 ## Services
 
-| Service    | Description                          | Default Port(s)          |
-| ---------- | ------------------------------------ | ------------------------ |
-| PostgreSQL | Relational database (v17)            | 5432                     |
-| MySQL      | Relational database (v8.4)           | 3306                     |
-| Redis      | In-memory key-value store (v7)       | 6379                     |
-| Valkey     | Redis-compatible key-value store (v8)| 6380                     |
-| Milvus     | Vector database (v2.4 standalone)    | 19530 (gRPC), 9091 (HTTP)|
+| Service    | Description                                   | Default Port(s)           |
+| ---------- | --------------------------------------------- | ------------------------- |
+| PostgreSQL | Relational database (v17)                     | 5432                      |
+| MySQL      | Relational database (v8.4)                    | 3306                      |
+| Redis      | In-memory key-value store (v7)                | 6379                      |
+| Valkey     | Redis-compatible key-value store (v8)         | 6380                      |
+| Milvus     | Vector database (v2.4 standalone)             | 19530 (gRPC), 9091 (HTTP) |
+| MinIO      | S3-compatible object storage (Milvus backend) | 9000 (API), 9001 (Console)|
+| Dashboard  | Service info web UI                           | 8090                      |
 
 Milvus runs with two internal dependencies (etcd and MinIO) which are managed automatically.
 
@@ -49,6 +59,7 @@ To override values without modifying the committed `.env`, create a **`.env.loca
 | `MILVUS_HTTP_PORT`         | 9091    |
 | `MILVUS_MINIO_PORT`        | 9000    |
 | `MILVUS_MINIO_CONSOLE_PORT`| 9001   |
+| `DASHBOARD_PORT`           | 8090   |
 
 ### Credentials
 
@@ -109,6 +120,20 @@ Python (pymilvus):
 from pymilvus import connections
 connections.connect(host="localhost", port="19530")
 ```
+
+### MinIO
+
+API endpoint: `http://localhost:9000`
+Console: [http://localhost:9001](http://localhost:9001)
+
+- **Access key:** `minioadmin`
+- **Secret key:** `minioadmin`
+
+MinIO provides S3-compatible object storage used by Milvus. You can also use it directly via any S3-compatible SDK or the `mc` CLI.
+
+### Dashboard
+
+Open [http://localhost:8090](http://localhost:8090) in a browser to view all service connection details at a glance.
 
 ## Data Persistence
 

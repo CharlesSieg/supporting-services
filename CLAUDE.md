@@ -55,6 +55,11 @@ All services run on `localhost` with the ports and credentials listed below. The
 - **Access key:** minioadmin
 - **Secret key:** minioadmin
 
+### Dashboard
+
+- **URL:** `http://localhost:8090`
+- Shows all service connection details in a web UI.
+
 ## Common Commands
 
 ```bash

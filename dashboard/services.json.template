@@ -1,0 +1,54 @@
+{
+  "services": {
+    "postgresql": {
+      "version": "17",
+      "host": "localhost",
+      "port": ${POSTGRES_PORT},
+      "user": "${POSTGRES_USER}",
+      "password": "${POSTGRES_PASSWORD}",
+      "database": "${POSTGRES_DB}",
+      "connection_string": "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:${POSTGRES_PORT}/${POSTGRES_DB}"
+    },
+    "mysql": {
+      "version": "8.4",
+      "host": "127.0.0.1",
+      "port": ${MYSQL_PORT},
+      "root_password": "${MYSQL_ROOT_PASSWORD}",
+      "user": "${MYSQL_USER}",
+      "password": "${MYSQL_PASSWORD}",
+      "database": "${MYSQL_DATABASE}",
+      "connection_string": "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@127.0.0.1:${MYSQL_PORT}/${MYSQL_DATABASE}"
+    },
+    "redis": {
+      "version": "7",
+      "host": "localhost",
+      "port": ${REDIS_PORT},
+      "connection_url": "redis://localhost:${REDIS_PORT}"
+    },
+    "valkey": {
+      "version": "8",
+      "host": "localhost",
+      "port": ${VALKEY_PORT},
+      "connection_url": "redis://localhost:${VALKEY_PORT}",
+      "notes": "Wire-compatible with Redis clients"
+    },
+    "milvus": {
+      "version": "2.4",
+      "host": "localhost",
+      "grpc_port": ${MILVUS_PORT},
+      "http_port": ${MILVUS_HTTP_PORT},
+      "health_check": "http://localhost:${MILVUS_HTTP_PORT}/healthz",
+      "connection_example": "connections.connect(host=\"localhost\", port=\"${MILVUS_PORT}\")"
+    },
+    "minio": {
+      "host": "localhost",
+      "api_port": ${MILVUS_MINIO_PORT},
+      "console_port": ${MILVUS_MINIO_CONSOLE_PORT},
+      "api_endpoint": "http://localhost:${MILVUS_MINIO_PORT}",
+      "console_url": "http://localhost:${MILVUS_MINIO_CONSOLE_PORT}",
+      "access_key": "minioadmin",
+      "secret_key": "minioadmin",
+      "notes": "S3-compatible object storage (Milvus backend)"
+    }
+  }
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supporting Services Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --border: #334155;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-dim: #0ea5e9;
+      --green: #4ade80;
+      --mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    header p {
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+      font-size: 0.9rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.25rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .card-badge {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      font-family: var(--mono);
+    }
+
+    .field {
+      margin-bottom: 0.75rem;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .field-value {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--green);
+      word-break: break-all;
+    }
+
+    .field-value.plain {
+      color: var(--text);
+    }
+
+    .conn-string {
+      display: block;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      margin-top: 0.75rem;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      word-break: break-all;
+      user-select: all;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 1rem; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Supporting Services</h1>
+  <p>Local development service dashboard</p>
+</header>
+
+<div class="grid">
+
+  <!-- PostgreSQL -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">PostgreSQL</span>
+      <span class="card-badge">v17</span>
+    </div>
+    <div class="field">
+      <div class="field-label">Host &amp; Port</div>
+      <div class="field-value">localhost:${POSTGRES_PORT}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">User</div>
+      <div class="field-value">${POSTGRES_USER}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Password</div>
+      <div class="field-value">${POSTGRES_PASSWORD}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Database</div>
+      <div class="field-value">${POSTGRES_DB}</div>
+    </div>
+    <code class="conn-string">postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:${POSTGRES_PORT}/${POSTGRES_DB}</code>
+  </div>
+
+  <!-- MySQL -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">MySQL</span>
+      <span class="card-badge">v8.4</span>
+    </div>
+    <div class="field">
+      <div class="field-label">Host &amp; Port</div>
+      <div class="field-value">127.0.0.1:${MYSQL_PORT}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Root Password</div>
+      <div class="field-value">${MYSQL_ROOT_PASSWORD}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">User</div>
+      <div class="field-value">${MYSQL_USER}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Password</div>
+      <div class="field-value">${MYSQL_PASSWORD}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Database</div>
+      <div class="field-value">${MYSQL_DATABASE}</div>
+    </div>
+    <code class="conn-string">mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@127.0.0.1:${MYSQL_PORT}/${MYSQL_DATABASE}</code>
+  </div>
+
+  <!-- Redis -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Redis</span>
+      <span class="card-badge">v7</span>
+    </div>
+    <div class="field">
+      <div class="field-label">Host &amp; Port</div>
+      <div class="field-value">localhost:${REDIS_PORT}</div>
+    </div>
+    <code class="conn-string">redis://localhost:${REDIS_PORT}</code>
+  </div>
+
+  <!-- Valkey -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Valkey</span>
+      <span class="card-badge">v8</span>
+    </div>
+    <div class="field">
+      <div class="field-label">Host &amp; Port</div>
+      <div class="field-value">localhost:${VALKEY_PORT}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Note</div>
+      <div class="field-value plain">Wire-compatible with Redis clients</div>
+    </div>
+    <code class="conn-string">redis://localhost:${VALKEY_PORT}</code>
+  </div>
+
+  <!-- Milvus -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Milvus</span>
+      <span class="card-badge">v2.4</span>
+    </div>
+    <div class="field">
+      <div class="field-label">gRPC Endpoint</div>
+      <div class="field-value">localhost:${MILVUS_PORT}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">HTTP / Health</div>
+      <div class="field-value">http://localhost:${MILVUS_HTTP_PORT}/healthz</div>
+    </div>
+    <code class="conn-string">connections.connect(host="localhost", port="${MILVUS_PORT}")</code>
+  </div>
+
+  <!-- MinIO -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">MinIO</span>
+      <span class="card-badge">Milvus storage</span>
+    </div>
+    <div class="field">
+      <div class="field-label">API Endpoint</div>
+      <div class="field-value">localhost:${MILVUS_MINIO_PORT}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Console</div>
+      <div class="field-value">http://localhost:${MILVUS_MINIO_CONSOLE_PORT}</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Access Key</div>
+      <div class="field-value">minioadmin</div>
+    </div>
+    <div class="field">
+      <div class="field-label">Secret Key</div>
+      <div class="field-value">minioadmin</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
